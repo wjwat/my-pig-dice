@@ -3,14 +3,24 @@ let currentPlayer = 0;
 let roundScore = 0;
 let currentRoll = 0;
 let players = [0, 0];
+let wins = [0, 0];
 
 function rollDice(sides) {
 	return Math.floor(Math.random() * sides) + 1;
 }
 
+function resetPlayers() {
+	currentPlayer = 0;
+	roundScore = 0;
+	currentRoll = 0;
+	players = [0, 0];
+}
+
 function checkForWinner() {
 	if (players[currentPlayer] + roundScore >= 100) {
-		alert('Player ' + (currentPlayer+1) + ' is a winner!')
+		alert('Player ' + (currentPlayer+1) + ' is a winner!');
+		wins[currentPlayer] += 1;		
+		resetPlayers();
 	}
 }
 
@@ -20,6 +30,7 @@ function playRound() {
 
 	if (currentRoll === 1) {
 		roundScore = 0;
+		currentRoll = 0;
 		endRound();
 	} else {
 		roundScore += currentRoll;
@@ -44,6 +55,12 @@ function updateDisplay() {
 	$('#current-score').text('Current Player Score: '+ players[currentPlayer]);
 	$('#round-score').text('Current Round Score: ' + roundScore);
 	$('#current-roll').text('Current roll is ' + currentRoll);
+
+	$('#player-scores').text('');
+	players.forEach((e, i) => {
+		let t = '<h5>Player ' + (i+1) + ' Score: ' + e + ' ('+ wins[i]+ ' wins)</h5>';
+		$('#player-scores').append(t)
+	});
 }
 
 function registerClickHandlers() {
@@ -52,7 +69,6 @@ function registerClickHandlers() {
 		updateDisplay();
 	});
 	$('#hold').on('click', e => {
-		updateDisplay();
 		endRound();
 		updateDisplay();
 	});
