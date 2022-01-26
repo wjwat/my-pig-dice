@@ -39,9 +39,16 @@ function playRound() {
 }
 
 function endRound() {
+	//currentPlayer = (currentPlayer+1 > players.length) ? 0 : currentPlayer+1;
+	let newCurrentPlayer = currentPlayer + 1;
+
+	if (newCurrentPlayer > players.length-1) {
+		newCurrentPlayer = 0;
+	}
+
 	players[currentPlayer] += roundScore;
 	roundScore = 0;
-	currentPlayer = (currentPlayer+1 > players.length) ? 0 : currentPlayer+1;
+	currentPlayer = newCurrentPlayer;
 }
 
 function updateDisplay() {
