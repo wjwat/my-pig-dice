@@ -35,7 +35,6 @@ function playRound() {
 	} else {
 		roundScore += currentRoll;
 	}
-	checkForWinner();
 }
 
 function endRound() {
@@ -67,6 +66,7 @@ function updateDisplay() {
 function registerClickHandlers() {
 	$('#roll').on('click', e => {
 		playRound();
+		checkForWinner();
 		updateDisplay();
 	});
 	$('#hold').on('click', e => {
